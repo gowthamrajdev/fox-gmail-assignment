@@ -17,9 +17,10 @@ passport.use(new googleStrategy({
 ));
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser((user, done) => {
-    done(null, user);
+  console.log('-->', user)
+  done(null, {message: 'logged out'});
 });

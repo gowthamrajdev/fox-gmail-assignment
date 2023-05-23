@@ -10,9 +10,15 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/auth', passport.authenticate('google', { scope:
+router.get('/auth/login', passport.authenticate('google', { scope:
   [ 'email', 'profile' ] }
 ));
+
+router.get('/auth/logout', (req, res, next) => {
+  req.logout(() => {
+    res.json({message: 'Logged Out successfully'})
+  });
+});
 
 router.get('/auth/callback', 
       passport.authenticate( 'google', {
