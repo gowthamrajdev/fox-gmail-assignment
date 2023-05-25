@@ -8,11 +8,14 @@ passport.use(new googleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:3000/users/auth/callback",
-    passReqToCallback   : true
+    passReqToCallback   : true,
+    scope: [
+      'https://mail.google.com/'
+    ]
   },
   function(request, accessToken, refreshToken, profile, done) {
-    console.log('profile', profile);
-    return done(null, profile)
+    const res = {profile, accessToken}
+    return done(null, res)
   }
 ));
 
@@ -21,6 +24,5 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-  console.log('-->', user)
   done(null, {message: 'logged out'});
 });
