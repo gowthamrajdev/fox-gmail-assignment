@@ -13,21 +13,21 @@ async function getAllGmails(oAuth2Client) {
 }
 
 function getMailsById(gmail, messages) {
-  const allGmailMessages = messages.map(message => {
+  const allGmails = messages.map(message => {
     return gmail.users.messages.get({userId: USER_ID, id: message.id})
-           .then(res => getProperGmailData(res.data))
+           .then(res => getProperMailDetails(res.data))
   });
-  return Promise.all(allGmailMessages)
+  return Promise.all(allGmails)
 }
 
-function getProperGmailData(message) {
+function getProperMailDetails(message) {
   const { headers } = message.payload;
  return {
     messageId: message.id,
-    from: headers.find(m => m.name === 'From').value || '',
-    to: headers.find(m => m.name === 'To').value || '',
-    subject: headers.find(m => m.name === 'Subject').value || '',
-    dateReceived: headers.find(m => m.name === 'Date').value || '',
+    from: headers.find(m => m.name === 'From')?.value || '',
+    to: headers.find(m => m.name === 'To')?.value || '',
+    subject: headers.find(m => m.name === 'Subject')?.value || '',
+    dateReceived: headers.find(m => m.name === 'Date')?.value || '',
     body: message.snippet
  } 
 }
