@@ -12,12 +12,6 @@ router.get('/', function(req, res, next) {
   res.json({ message: 'user routes' })
 });
 
-
-router.get('/auth/login', passport.authenticate('google', { scope:
-  [ 'email', 'profile' ] }
-));
-
-// Below test 
 const CLIENT_ID = OAuth2Data.client.id;
 const CLIENT_SECRET = OAuth2Data.client.secret;
 const REDIRECT_URL = OAuth2Data.client.redirect
@@ -37,22 +31,20 @@ router.get('/auth/gmail/login', (req, res, next) => {
 
 
 router.get('/auth/gmail/callback', (req, res, next) => {
-  // console.log('--req--->', req)
   const code = req.query.code;
   if (code) {
-    oAuth2Client.getToken(code, (err, token) => {
-      console.log('--coming in---')
-      console.log('--tokens---', token)
-      // console.log('--before---', oAuth2Client)
+    oAuth2Client.getToken(code, async (err, token) => {
       if (err) return res.json({err});
-      oAuth2Client.setCredentials(token)
-      console.log('--oAuth2Client->', getAllGmails(oAuth2Client, res));
-      res.json({message: 'time to lead'})
+      oAuth2Client.setCredentials(token);
+      getAllGmails(oAuth2Client)
+      .then(data => {
+        res.json({message: data})
+      })
+      
     })
   } else {
     res.json({message: 'No Google Auth Token'})
   }
-  
 });
 
 router.get('/auth/logout', (req, res, next) => {
@@ -61,7 +53,11 @@ router.get('/auth/logout', (req, res, next) => {
   });
 });
 
-// Google Auth
+
+// Normal Google Auth
+router.get('/auth/login', passport.authenticate('google', { scope:
+  ['profile' ] }
+));
 
 router.get('/auth/callback', 
       passport.authenticate( 'google', {
