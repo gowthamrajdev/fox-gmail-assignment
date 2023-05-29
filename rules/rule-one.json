@@ -1,0 +1,10 @@
+[{
+	"field": "FROM",
+	"predicate": "CONTAINE",
+	"value": "Google"
+},
+{
+	"field": "TO",
+	"predicate": "EQUAL",
+	"value": "gowthamrajrajendran@gmail.com"
+}]

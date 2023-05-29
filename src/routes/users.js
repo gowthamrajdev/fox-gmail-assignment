@@ -52,7 +52,7 @@ router.get('/auth/logout', (req, res, next) => {
 });
 
 
-// Normal Google Auth
+// Normal Google Auth No Need for Now 
 router.get('/auth/login', passport.authenticate('google', { scope:
   ['profile' ] }
 ));

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import mailRulesRouter from './routes/mail-rules';
 import passport from 'passport';
 import session from 'express-session';
 
@@ -25,6 +26,7 @@ app.use(passport.session()); // persistent login sessions
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/mail-rules', mailRulesRouter);
 
 
 export default app;
