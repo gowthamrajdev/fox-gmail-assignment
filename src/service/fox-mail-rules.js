@@ -1,7 +1,7 @@
 import FoxMail from "../../models/fox-mail";
 import ruleOne  from '../../rules/rule-one.json';
 import moment from 'moment';
-import { FIELD, PREDICATE_STRING, PREDICATE_DATE, RULE_FILTER_TYPE, DATE_INTERVAL_TYPE } from '../service/rules-config/filters-conditions';
+import { FIELD, PREDICATE_STRING, PREDICATE_DATE, RULE_FILTER_TYPE, DATE_INTERVAL_TYPE } from './rules-constant/filters-conditions';
 import { DATE_FORMAT } from "../util";
 
 function getMailByRule() {
