@@ -1,6 +1,7 @@
 import {google} from 'googleapis';
 import { createOrUpdateMail } from './fox-mail-sync';
 import moment from 'moment';
+import { DATE_FORMAT } from '../util';
 
 const GMAIL_API_VERSION = 'v1';
 const USER_ID = 'me';
@@ -32,7 +33,7 @@ function getProperMailDetails(message) {
     from: headers.find(m => m.name === 'From')?.value || '',
     to: headers.find(m => m.name === 'To')?.value || '',
     subject: headers.find(m => m.name === 'Subject')?.value || '',
-    dateReceived: moment(headers.find(m => m.name === 'Date')?.value).format("YYYY-MM-DD HH:MM:SS")  || '',
+    dateReceived: moment(headers.find(m => m.name === 'Date')?.value).format(DATE_FORMAT)  || '',
     body: message.snippet
  } 
 }

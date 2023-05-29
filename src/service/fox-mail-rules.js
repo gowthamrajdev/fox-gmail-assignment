@@ -2,7 +2,7 @@ import FoxMail from "../../models/fox-mail";
 import ruleOne  from '../../rules/rule-one.json';
 import moment from 'moment';
 import { FIELD, PREDICATE_STRING, PREDICATE_DATE, RULE_FILTER_TYPE, DATE_INTERVAL_TYPE } from '../service/rules-config/filters-conditions';
-
+import { DATE_FORMAT } from "../util";
 
 function getMailByRule() {
     return FoxMail.findAll({
@@ -29,18 +29,18 @@ function stringQuery(rule) {
 } 
 
 function dateQuery(rule) {
-    const now = moment().format('YYYY-MM-DD HH:MM:SS');
+    const now = moment().format(DATE_FORMAT);
     if (PREDICATE_DATE[rule.predicate] === PREDICATE_DATE.LESS_THAN) {
         return {
             [FIELD[rule.field]]: {
               [PREDICATE_DATE.LESS_THAN]: now,
-              [PREDICATE_DATE.GREATER_THAN]: moment(now).subtract(rule.value, DATE_INTERVAL_TYPE.DAY).format('YYYY-MM-DD HH:MM:SS')
+              [PREDICATE_DATE.GREATER_THAN]: moment(now).subtract(rule.value, DATE_INTERVAL_TYPE.DAY).format(DATE_FORMAT)
             }
           }
     } else {
         return {
             [FIELD[rule.field]]: {
-              [PREDICATE_DATE.LESS_THAN]: moment(now).add(rule.value, DATE_INTERVAL_TYPE.DAY).format('YYYY-MM-DD HH:MM:SS'),
+              [PREDICATE_DATE.LESS_THAN]: moment(now).add(rule.value, DATE_INTERVAL_TYPE.DAY).format(DATE_FORMAT),
               [PREDICATE_DATE.GREATER_THAN]: now
             }
           }
