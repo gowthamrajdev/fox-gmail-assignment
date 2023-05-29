@@ -9,9 +9,9 @@ module.exports = {
       primaryKey: true,
       autoIncrement: true
     },
-    mailId: {type: Sequelize.STRING, unique: true},
-    mailSource: Sequelize.STRING,
-    mailContent: Sequelize.JSONB,
+    message_id: {type: Sequelize.STRING, unique: true},
+    mail_source: Sequelize.STRING,
+    mail_content: Sequelize.JSONB,
     created_at: Sequelize.DATE, 
     updated_at: Sequelize.DATE
    })
