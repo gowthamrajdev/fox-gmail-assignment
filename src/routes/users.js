@@ -1,12 +1,10 @@
 import express from 'express';
 import passport from 'passport';
-import { getAllGmails } from '../service/gmail';
+import { getGmailsDataAndSync } from '../service/gmail-auth';
 import OAuth2Data from '../../initializers/google-credentials.json';
 import {google} from 'googleapis';
 
 const router = express.Router();
-
-/* GET users listing. */
 
 router.get('/', function(req, res, next) {
   res.json({ message: 'user routes' })
@@ -36,7 +34,7 @@ router.get('/auth/gmail/callback', (req, res, next) => {
     oAuth2Client.getToken(code, async (err, token) => {
       if (err) return res.json({err});
       oAuth2Client.setCredentials(token);
-      getAllGmails(oAuth2Client)
+      getGmailsDataAndSync(oAuth2Client)
       .then(data => {
         res.json({message: data})
       })
