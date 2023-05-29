@@ -1,10 +1,17 @@
-[{
-	"field": "FROM",
-	"predicate": "CONTAINE",
-	"value": "Google"
-},
 {
-	"field": "TO",
-	"predicate": "EQUAL",
-	"value": "gowthamrajrajendran@gmail.com"
-}]
+    "rules":[{
+        "field": "FROM",
+        "predicate": "CONTAINE",
+        "value": "Google"
+    },
+    {
+        "field": "TO",
+        "predicate": "CONTAINE",
+        "value": "gowthamrajrajendran@gmail.com"
+    },{
+        "field": "DATE_RECEIVED",
+        "predicate": "LESS_THAN",
+        "value": 10
+    }],
+    "ruleType": "ALL"
+}
