@@ -13,5 +13,15 @@
         "predicate": "LESS_THAN",
         "value": 10
     }],
-    "ruleType": "ALL"
+    "ruleType": "ALL",
+    "actions": [{
+        "field": "ADD",
+        "value": "UNREAD"   
+        },{
+            "field": "ADD",
+            "value": "INBOX"   
+        },{
+            "field": "ADD",
+            "value": "STARRED"   
+    }]
 }
