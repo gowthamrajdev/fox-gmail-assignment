@@ -36,5 +36,23 @@ Server port: http://localhost:3000
 
 ## Fox Rules Config
 
-Fox Rules and actions configs are in `rules/rules-details.json` directory.
+Fox Rules and actions configs file is in `rules/rules-details.json` directory. Please do refer `src/service/rules-constant/filters-conditions.js` and `src/service/rules-constant/actions-conditions.js` files to define the config.
 
+Below are the mapping for the config:
+   1. `rules` will have all the set of rules as array.
+   2. For `field` refer keys from the `FIELD` in the `filters-conditions.js`.
+   3. For `predicate` refer keys from the `PREDICATE_STRING`/`PREDICATE_DATE` in the `filters-conditions.js`.
+   4. `value` will be value for ur rule.
+   5. `ruleType` refer keys from `RULE_FILTER_TYPE` in the `filters-conditions.js`
+   6. `actions` will have all the set of actions as array.
+   7. For action `field` refer keys from `ACTION_KEYS_WORDS` in the `actions-conditions.js`.
+   8. For action `value` refer keys from `ACTION_TYPE` in the `actions-conditions.js`.
+
+
+## APIs:
+1. Gmail oAuth Login and Mail sync - `http://localhost:3000/users/auth/gmail/login`
+2. Perform Fox Rules and actions - `http://localhost:3000/mail-rules/submit`
+
+## Note:
+1. Once logged in open a new tab in a browser and hit `Fox Rules and actions` API, then see the result in the logged in gmail.
+2. Do the rules/action changes in `rules/rules-details.json`.
