@@ -3,11 +3,12 @@ import { createOrUpdateMail } from './fox-mail-sync';
 import moment from 'moment';
 import { DATE_FORMAT } from '../util';
 
-const GMAIL_API_VERSION = 'v1';
-const USER_ID = 'me';
-const MAX_RESULT_COUNT = 5;
+export const GMAIL_API_VERSION = 'v1';
+export const USER_ID = 'me';
+export const MAX_RESULT_COUNT = 5;
 
 async function getGmailsDataAndSync(oAuth2Client) {
+  console.log('--main oauth---', oAuth2Client);
   const gmail = new google.gmail({version: GMAIL_API_VERSION, auth: oAuth2Client});
   return gmail.users.messages.list({userId: USER_ID, maxResults: MAX_RESULT_COUNT})
           .then(async res=> {

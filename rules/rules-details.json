@@ -7,7 +7,7 @@
     {
         "field": "TO",
         "predicate": "CONTAINE",
-        "value": "gowthamrajrajendran@gmail.com"
+        "value": "gowthamrajdev@gmail.com"
     },{
         "field": "DATE_RECEIVED",
         "predicate": "LESS_THAN",

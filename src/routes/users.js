@@ -34,15 +34,19 @@ router.get('/auth/gmail/callback', (req, res, next) => {
     oAuth2Client.getToken(code, async (err, token) => {
       if (err) return res.json({err});
       oAuth2Client.setCredentials(token);
+      req.session.oAuth2Client = oAuth2Client;
       getGmailsDataAndSync(oAuth2Client)
       .then(data => {
         res.json({message: data})
       })
-      
     })
   } else {
     res.json({message: 'No Google Auth Token'})
   }
+});
+
+router.get('/auth/test', (req, res, next) => {
+  res.json({message: 'Logged Out successfully'})
 });
 
 router.get('/auth/logout', (req, res, next) => {

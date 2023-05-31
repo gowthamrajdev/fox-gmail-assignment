@@ -12,17 +12,20 @@ require('../initializers/passport-auth');
 
 const app = express();
 
+app.use(session({ secret: 'MYSECRET',saveUninitialized: false, resave: false, cookie: {secure: false} })); 
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../public')));
-app.use(session({ secret: 'SECRET', resave: true, saveUninitialized: false })); 
 
-// passport initialization
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
 
+app.use(function(req, res, next) {
+    next();
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
