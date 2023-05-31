@@ -7,13 +7,12 @@ export const GMAIL_API_VERSION = 'v1';
 export const USER_ID = 'me';
 export const MAX_RESULT_COUNT = 5;
 
-async function getGmailsDataAndSync(oAuth2Client) {
-  console.log('--main oauth---', oAuth2Client);
+async function getGmailDataAndSync(oAuth2Client) {
   const gmail = new google.gmail({version: GMAIL_API_VERSION, auth: oAuth2Client});
   return gmail.users.messages.list({userId: USER_ID, maxResults: MAX_RESULT_COUNT})
           .then(async res=> {
             return await getMailsById(gmail, res.data.messages);
-  })
+  });
 }
 
 function getMailsById(gmail, messages) {
@@ -41,5 +40,5 @@ function getProperMailDetails(message) {
 
 
 export {
-  getGmailsDataAndSync
+  getGmailDataAndSync
 }

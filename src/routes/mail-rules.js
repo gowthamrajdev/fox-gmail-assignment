@@ -12,11 +12,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/rules', isLoggedIn, function(req, res, next) {
-    const oAuth2Client = req.session.oAuth2Client;
+    const oAuth2Client = getOAuthClient();
+    const token = req.session.oAuth2Client.token;
+    oAuth2Client.setCredentials(token);
+
     getMailByRule()
     .then(data => {
         if (data.length > 0) {
-            performAction(data, rulesDetails.actions, oAuth2Client.credentials)
+            performAction(data, rulesDetails.actions, oAuth2Client)
             .then(actionRes => {
                 return res.json({ actionRes });
             });

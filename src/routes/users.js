@@ -1,52 +1,37 @@
 import express from 'express';
-import passport from 'passport';
-import { getGmailsDataAndSync } from '../service/gmail-auth';
+import { getGmailDataAndSync } from '../service/gmail-auth';
 import OAuth2Data from '../../initializers/google-credentials.json';
-import {google} from 'googleapis';
+import { getOAuthClient } from '../util';
 
 const router = express.Router();
+const oAuth2Client = getOAuthClient()
 
 router.get('/', function(req, res, next) {
   res.json({ message: 'user routes' })
 });
 
-const CLIENT_ID = OAuth2Data.client.id;
-const CLIENT_SECRET = OAuth2Data.client.secret;
-const REDIRECT_URL = OAuth2Data.client.redirect
-
-const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL)
-
-
+// Login And Gmail Sync
 router.get('/auth/gmail/login', (req, res, next) => {
     const url = oAuth2Client.generateAuthUrl({
         access_type: 'offline',
-        scope: [
-            'https://mail.google.com/'
-          ]
+        scope: OAuth2Data.client.scope
       });
     res.redirect(url);  
 });
-
 
 router.get('/auth/gmail/callback', (req, res, next) => {
   const code = req.query.code;
   if (code) {
     oAuth2Client.getToken(code, async (err, token) => {
       if (err) return res.json({err});
-      oAuth2Client.setCredentials(token);
-      req.session.oAuth2Client = oAuth2Client;
-      getGmailsDataAndSync(oAuth2Client)
-      .then(data => {
-        res.json({message: data})
-      })
+        oAuth2Client.setCredentials(token);
+        req.session.oAuth2Client = oAuth2Client;
+        getGmailDataAndSync(oAuth2Client)
+          .then(data => res.json({message: data}))
     })
   } else {
     res.json({message: 'No Google Auth Token'})
   }
-});
-
-router.get('/auth/test', (req, res, next) => {
-  res.json({message: 'Logged Out successfully'})
 });
 
 router.get('/auth/logout', (req, res, next) => {
@@ -55,24 +40,5 @@ router.get('/auth/logout', (req, res, next) => {
   });
 });
 
-
-// Normal Google Auth No Need for Now 
-router.get('/auth/login', passport.authenticate('google', { scope:
-  ['profile' ] }
-));
-
-router.get('/auth/callback', 
-      passport.authenticate( 'google', {
-          failureRedirect: '/users/auth/google/failure'
-}), (req, res) => {
-  getAllGmails(req.user.accessToken, req.query.code, res)
-  .then(data => {
-    res.json({data})
-  });
-});
-
-router.get('/auth/google/failure', (req, res, next) => {
-  res.json({message: 'google login failed'})
-});
 
 export default router;
