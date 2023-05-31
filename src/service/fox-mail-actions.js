@@ -1,5 +1,5 @@
 import {google} from 'googleapis';
-import { GMAIL_API_VERSION, USER_ID } from './gmail-auth';
+import { GMAIL_API_VERSION, USER_ID } from '../util';
 import {ACTION_KEYS_WORDS, ACTION_TYPE} from '../service/rules-constant/actions-conditions';
 
 
@@ -10,7 +10,7 @@ function performAction(filteredMails, actionConfig, oAuth2Client) {
     return gmail.users.messages.batchModify(reqBody)
           .then(async res=> {
             return {data: 'Data updated in Gmail'};
-        });
+        }).catch(err => err);
 }
 
 function getRequestBobyByConfig(actionConfig, ids) {

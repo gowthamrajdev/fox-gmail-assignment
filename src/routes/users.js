@@ -28,6 +28,7 @@ router.get('/auth/gmail/callback', (req, res, next) => {
         req.session.oAuth2Client = oAuth2Client;
         getGmailDataAndSync(oAuth2Client)
           .then(data => res.json({message: data}))
+          .catch(err => res.json({message: err}))
     })
   } else {
     res.json({message: 'No Google Auth Token'})
