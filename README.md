@@ -56,3 +56,4 @@ Below are the mapping for the config:
 ## Note:
 1. Once logged in open a new tab in a browser and hit `Fox Rules and actions` API, then see the result in the logged in gmail.
 2. Do the rules/action changes in `rules/rules-details.json`.
+3. Latest code is in `main` branch.
